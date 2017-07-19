@@ -870,9 +870,6 @@ import UIKit
         return points.filter({ $0 % ref.dataPointLabelsSparsity == 0 })
     }
     
-    private func createCircleDataPoint(centre: CGPoint) -> UIBezierPath {
-        return UIBezierPath(arcCenter: centre, radius: dataPointSize, startAngle: 0, endAngle: CGFloat(2.0 * Double.pi), clockwise: true)
-    }
 
     // MARK: - Drawing Delegate
     // ########################
@@ -1022,32 +1019,3 @@ public extension ScrollableGraphView : ScrollableGraphViewDataSource {
     }
 }
 #endif
-
-@objc public enum ScrollableGraphViewReferenceLineType : Int {
-    case cover
-    //case Edge // FUTURE: Implement
-}
-
-@objc public enum ScrollableGraphViewAnimationType : Int {
-    case easeOut
-    case elastic
-    case custom
-}
-
-@objc public enum ScrollableGraphViewDirection : Int {
-    case leftToRight
-    case rightToLeft
-}
-
-// Simplified easing functions from: http://www.joshondesign.com/2013/03/01/improvedEasingEquations
-private struct Easings {
-    
-    static let easeInQuad =  { (t:Double) -> Double in  return t*t; }
-    static let easeOutQuad = { (t:Double) -> Double in  return 1 - Easings.easeInQuad(1-t); }
-    
-    static let easeOutElastic = { (t: Double) -> Double in
-        var p = 0.3;
-        return pow(2,-10*t) * sin((t-p/4)*(2*Double.pi)/p) + 1;
-    }
-}
-
